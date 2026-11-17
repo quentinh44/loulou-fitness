@@ -824,3 +824,97 @@ img {
     font-size: 0.95rem;
   }
 }
+.modal {
+  border: 1px solid var(--gold);
+  border-radius: 24px;
+  padding: 0;
+  background: #121214;
+  color: var(--ink);
+  width: min(520px, calc(100% - 24px));
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+}
+.modal::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+}
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+.modal-box {
+  position: relative;
+  padding: 32px 24px 24px;
+  display: grid;
+  gap: 16px;
+}
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.modal form {
+  display: grid;
+  gap: 14px;
+}
+.modal label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.modal input,
+.modal select {
+  font: inherit;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  color: var(--ink);
+  background: #0a0a0b;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  color-scheme: dark;
+}
+.modal input:focus,
+.modal select:focus {
+  outline: 3px solid var(--gold);
+  outline-offset: 1px;
+  border-color: var(--gold);
+}
+.modal .btn {
+  width: 100%;
+}
+.f2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.f2 > * {
+  min-width: 0;
+}
+.hp {
+  position: absolute;
+  left: -9999px;
+}
+.note {
+  font-size: 0.85rem;
+  color: var(--mute);
+}
+#trial-msg {
+  font-weight: 600;
+  color: var(--gold);
+}
+#trial-msg:empty {
+  display: none;
+}
+@media (max-width: 480px) {
+  .f2 {
+    grid-template-columns: 1fr;
+  }
+}

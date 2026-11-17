@@ -117,7 +117,7 @@
               bonne ambiance !
             </p>
             <div class="actions">
-              <a class="btn" href="#essai">Séance d’essai offerte</a>
+              <a class="btn" href="#essai" data-trial>Séance d’essai offerte</a>
               <a class="btn ghost" href="#forfaits">Voir les forfaits</a>
             </div>
           </div>
@@ -533,7 +533,10 @@
                 <br />Sous réserve de disponibilité.
               </p>
             </div>
-            <a class="btn dark" href="https://reservation.loulou-fitness.fr"
+            <a
+              class="btn dark"
+              href="https://reservation.loulou-fitness.fr"
+              data-trial
               >Demander ma séance d’essai</a
             >
           </div>
@@ -626,7 +629,10 @@
       <p>
         <strong>Séance d’essai offerte</strong> <span>sans engagement</span>
       </p>
-      <a class="btn dark" href="https://reservation.loulou-fitness.fr"
+      <a
+        class="btn dark"
+        href="https://reservation.loulou-fitness.fr"
+        data-trial
         >Demander ma séance d’essai gratuite</a
       >
     </div>
@@ -725,6 +731,192 @@
         tr.addEventListener("scroll", upd, { passive: true });
         upd();
       })();
+    </script>
+    <dialog id="trial-dialog" class="modal" aria-labelledby="trial-title">
+      <div class="modal-box">
+        <button
+          type="button"
+          class="modal-close"
+          aria-label="Fermer"
+          data-close
+        >
+          ×
+        </button>
+        <h2 id="trial-title">Séance d’essai offerte</h2>
+        <p class="muted">
+          Indiquez vos coordonnées et le créneau souhaité, nous vous confirmons
+          rapidement.
+        </p>
+        <form id="trial-form">
+          <input type="hidden" name="access_key" value="e2e7928f-32af-4eff-911d-590697a994f9" />
+          <input
+            type="hidden"
+            name="subject"
+            value="Demande de séance d’essai (loulou-fitness.fr)"
+          />
+          <input type="hidden" name="from_name" value="Site Loulou Fitness" />
+          <input
+            type="checkbox"
+            name="botcheck"
+            class="hp"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+          <div class="f2">
+            <label
+              >Prénom<input name="prenom" autocomplete="given-name" required
+            /></label>
+            <label
+              >Nom<input name="nom" autocomplete="family-name" required
+            /></label>
+          </div>
+          <label
+            >Téléphone<input
+              name="phone"
+              type="tel"
+              inputmode="tel"
+              autocomplete="tel"
+              required
+          /></label>
+          <label
+            >E-mail<input
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+          /></label>
+          <div class="f2">
+            <label
+              >Date souhaitée<input
+                name="date"
+                type="date"
+                id="trial-date"
+                required
+            /></label>
+            <label
+              >Heure<select name="heure" id="trial-time" required disabled>
+                <option value="">Choisir une date</option>
+              </select></label
+            >
+          </div>
+          <p class="note">
+            Ces informations servent uniquement à répondre à votre demande.
+          </p>
+          <p id="trial-msg" role="status" aria-live="polite"></p>
+          <button class="btn" type="submit">Envoyer ma demande</button>
+        </form>
+      </div>
+    </dialog>
+    <script>
+      document.addEventListener('DOMContentLoaded',function(){
+        var dlg = document.getElementById("trial-dialog"),
+          form = document.getElementById("trial-form");
+        if (!dlg || !form || typeof dlg.showModal !== "function") return;
+        var date = document.getElementById("trial-date"),
+          time = document.getElementById("trial-time"),
+          msg = document.getElementById("trial-msg");
+        var ALL=['10h15','12h15','15h00','17h30']; // [début, dernier créneau] en minutes ; dimanche absent = fermé
+        var SLOTS={1:ALL,2:ALL,3:ALL,4:ALL,5:ALL,6:ALL};
+        function pad(n) {
+          return n < 10 ? "0" + n : "" + n;
+        }
+        function reset(txt) {
+          time.innerHTML = '<option value="">' + txt + "</option>";
+          time.disabled = true;
+        }
+        var t = new Date();
+        t.setDate(t.getDate() + 1);
+        date.min =
+          t.getFullYear() +
+          "-" +
+          pad(t.getMonth() + 1) +
+          "-" +
+          pad(t.getDate());
+        date.addEventListener("change", function () {
+          date.setCustomValidity("");
+          if (!date.value) {
+            reset("Choisir une date");
+            return;
+          }
+          var p = date.value.split("-"),
+            h = SLOTS[new Date(+p[0], p[1] - 1, +p[2]).getDay()]; 
+          if (!h) {
+            date.setCustomValidity(
+              "Pas de séance ce jour-là, choisissez un autre jour.",
+            );
+            date.reportValidity();
+            reset("Jour non disponible");
+            return;
+          }
+          time.innerHTML = '<option value="">Choisir une heure</option>';
+          h.forEach(function(l){time.add(new Option(l,l));});
+          
+          time.disabled = false;
+        });
+        document.addEventListener("click", function (e) {
+          if (e.target.closest("[data-trial]")) {
+            e.preventDefault();
+            msg.textContent = "";
+            dlg.showModal();
+            return;
+          }
+          if (e.target.closest("[data-close]") || e.target === dlg) dlg.close();
+        });
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var o = {};
+          new FormData(form).forEach(function (v, k) {
+            o[k] = v;
+          });
+          if (o.botcheck) return;
+          var p = o.date.split("-");
+          o.name = o.prenom + " " + o.nom;
+          o.message =
+            "Demande de séance d’essai\nNom : " +
+            o.name +
+            "\nTéléphone : " +
+            o.phone +
+            "\nE-mail : " +
+            o.email +
+            "\nDate souhaitée : " +
+            p[2] +
+            "/" +
+            p[1] +
+            "/" +
+            p[0] +
+            " à " +
+            o.heure;
+          var btn = form.querySelector("[type=submit]");
+          btn.disabled = true;
+          msg.textContent = "Envoi en cours…";
+          fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(o),
+          })
+            .then(function (r) {
+              return r.json();
+            })
+            .then(function (j) {
+              if (!j.success) throw new Error(j.message);
+              form.reset();
+              reset("Choisir une date");
+              msg.textContent =
+                "Merci ! Votre demande est bien envoyée, nous revenons vers vous rapidement.";
+            })
+            .catch(function () {
+              msg.textContent =
+                "Envoi impossible. Réessayez ou appelez le 06 68 49 77 50.";
+            })
+            .then(function () {
+              btn.disabled = false;
+            });
+        });
+      });
     </script>
   </body>
 </html>
