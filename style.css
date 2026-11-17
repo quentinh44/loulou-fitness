@@ -50,6 +50,9 @@ p {
 a {
   color: inherit;
 }
+#tel {
+  text-decoration: none;
+}
 a:focus-visible,
 button:focus-visible {
   outline: 3px solid var(--gold);
@@ -648,3 +651,53 @@ footer ul {
     scroll-behavior: auto;
   }
 }
+.plans {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.plan {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.plan .price {
+  margin: auto 0 18px;
+  padding-top: 16px;
+}
+.plan .btn {
+  width: 100%;
+}
+.badge {
+  display: inline-block;
+  background: var(--gold);
+  color: #000;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 2px 12px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+.plan {
+  position: relative;
+}
+.plan .badge {
+  position: absolute;
+  top: -11px;
+  right: 18px;
+  margin: 0;
+  padding: 3px 12px;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+.contact{display:grid;gap:6px}
+.contact a{display:flex;align-items:center;gap:12px;min-height:44px;text-decoration:none;color:var(--ink);overflow-wrap:anywhere}
+.contact a:hover{color:var(--gold)}
+.contact .ico{flex:0 0 40px;height:40px;display:grid;place-items:center;border:1.5px solid var(--gold);border-radius:50%;color:var(--gold);transition:background .2s,color .2s}
+.contact .ico svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.contact a:hover .ico,.contact a:focus-visible .ico{background:var(--gold);color:#000}
+@media(prefers-reduced-motion:reduce){.contact .ico{transition:none}}
+.socials{display:flex;gap:12px;margin-top:14px}
+.socials a{width:44px;height:44px;display:grid;place-items:center;border:1.5px solid var(--gold);border-radius:50%;color:var(--gold);transition:background .2s,color .2s}
+.socials a:hover,.socials a:focus-visible{background:var(--gold);color:#000}
+.socials svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media(prefers-reduced-motion:reduce){.socials a{transition:none}}
