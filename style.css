@@ -918,3 +918,35 @@ body:has(dialog[open]) {
     grid-template-columns: 1fr;
   }
 }
+@media (max-width: 560px) {
+  .top .wrap {
+    gap: 8px;
+    padding: 0 14px;
+  }
+  .logo {
+    font-size: 1.1rem;
+    gap: 6px;
+  }
+  .logo svg {
+    width: 22px;
+    height: 22px;
+  }
+  .logo .script {
+    font-size: 1.3rem;
+  }
+  .logo b {
+    font-size: 0.85rem;
+  }
+  nav .btn {
+    white-space: nowrap;
+    text-align: center;
+    min-height: 40px;
+    padding: 0 14px;
+    font-size: 0.88rem;
+  }
+}
+@media (max-width: 360px) {
+  .logo svg {
+    display: none;
+  }
+}
