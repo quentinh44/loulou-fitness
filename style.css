@@ -158,6 +158,16 @@ header.top {
   color: #fff;
   font-size: 1.7rem;
 }
+.logo img {
+  display: block;
+  height: 44px;
+  width: auto;
+}
+@media (max-width: 560px) {
+  .logo img {
+    height: 36px;
+  }
+}
 .logo b {
   color: var(--gold);
   font-style: italic;
