@@ -54,20 +54,32 @@
         "openingHoursSpecification": [
           {
             "@type": "OpeningHoursSpecification",
-            "dayOfWeek": [
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday"
-            ],
-            "opens": "09:00",
-            "closes": "20:30"
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "10:15",
+            "closes": "11:15"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "12:15",
+            "closes": "13:15"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "15:00",
+            "closes": "16:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "17:30",
+            "closes": "18:30"
           },
           {
             "@type": "OpeningHoursSpecification",
             "dayOfWeek": "Saturday",
-            "opens": "09:00",
+            "opens": "10:00",
             "closes": "11:00"
           }
         ],
@@ -145,7 +157,7 @@
           <div class="card">
             <h3>Créneaux flexibles</h3>
             <p>
-              Du lundi au vendredi de 9h à 20h30, avec réservation en ligne.
+              Du lundi au vendredi, 4 créneaux par jour : 10h15, 12h15, 15h et 17h30. Le samedi à 10h.
             </p>
           </div>
         </div>
@@ -203,16 +215,16 @@
             <div class="track" tabindex="0">
               <figure class="slide">
                 <img
-                  src="assets/photo_studio_1.avif"
-                  alt="Description de la photo"
+                  src="assets/salle-db-kb.webp"
+                  alt="Haltères et kettlebells au studio Loulou Fitness"
                   width="1200"
                   height="800"
                 />
               </figure>
               <figure class="slide">
                 <img
-                  src="assets/photo_studio_2.avif"
-                  alt="Description de la photo"
+                  src="assets/salle-rack.webp"
+                  alt="Rack de musculation au studio Loulou Fitness"
                   width="1200"
                   height="800"
                   loading="lazy"
@@ -220,8 +232,8 @@
               </figure>
               <figure class="slide">
                 <img
-                  src="assets/photo_studio_3.avif"
-                  alt="Description de la photo"
+                  src="assets/salle-ergo.webp"
+                  alt="Ergomètre au studio Loulou Fitness"
                   width="1200"
                   height="800"
                   loading="lazy"
@@ -556,8 +568,12 @@
           <div>
             <h3>Horaires</h3>
             <ul>
-              <li>Lundi au vendredi : 9h – 20h30</li>
-              <li>Samedi : 9h – 11h</li>
+              <li>Lundi au vendredi :</li>
+              <li>10h15 – 11h15</li>
+              <li>12h15 – 13h15</li>
+              <li>15h00 – 16h00</li>
+              <li>17h30 – 18h30</li>
+              <li>Samedi : 10h – 11h</li>
               <li>Dimanche : fermé</li>
             </ul>
           </div>
@@ -775,7 +791,7 @@
           time = document.getElementById("trial-time"),
           msg = document.getElementById("trial-msg");
         var ALL=['10h15','12h15','15h00','17h30']; // [début, dernier créneau] en minutes ; dimanche absent = fermé
-        var SLOTS={1:ALL,2:ALL,3:ALL,4:ALL,5:ALL,6:ALL};
+        var SLOTS={1:ALL,2:ALL,3:ALL,4:ALL,5:ALL,6:['10h00']};
         function pad(n) {
           return n < 10 ? "0" + n : "" + n;
         }
